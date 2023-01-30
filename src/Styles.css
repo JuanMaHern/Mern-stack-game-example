@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.App {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+    padding: 5px;
+}
+
+.df {
+    display: flex;
+}
+
+.fdc {
+    flex-direction: column;
+}
+
+.jsc {
+    justify-content: center;
+}
+
+.aic {
+    align-items: center;
+}
+.ys {
+    overflow-y: scroll;
+}
+.hidde{
+    display: none;
+}
+.br{
+    border: 2px solid red;
+}
+::-webkit-scrollbar {
+    display: none;
+}
