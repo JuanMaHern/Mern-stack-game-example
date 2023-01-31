@@ -4,7 +4,7 @@ export function Player() {
         pv: 50,
         exp: 0,
         lvl: 1,
-        atq: 10,
+        atq: 2,
         def: 1,
         gold: 0,
       }

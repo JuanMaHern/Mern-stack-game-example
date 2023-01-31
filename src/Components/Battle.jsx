@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react"
 
-const Battle = ({ player, enemi }) => {
+const Battle = ({ player, enemi, setWindow }) => {
 
     const [battle, setBattle] = useState({
         player: JSON.parse(JSON.stringify(player.current)),
@@ -14,7 +14,7 @@ const Battle = ({ player, enemi }) => {
 
     const logBott = useRef(null)
     useEffect(() => {
-        logBott.current.scrollIntoView({behavior: "smooth"});
+        logBott.current.scrollIntoView({ behavior: "smooth" });
     }, [battle.log])
 
     if (battle.turn === 'enemi' && battle.state === 'battle') {
@@ -24,9 +24,10 @@ const Battle = ({ player, enemi }) => {
         auxBattle.log.push(`Player -${auxBattle.enemi.atq} PV`)
         setTimeout(() => {
             setBattle(auxBattle)
+            player.current = auxBattle.player
         }, 1000)
     }
-    if(battle.state === 'win'){
+    if (battle.state === 'win') {
         let auxBattle = JSON.parse(JSON.stringify(battle))
         auxBattle.enemi.pv = enemi.current.pv
         auxBattle.state = 'battle'
@@ -37,9 +38,12 @@ const Battle = ({ player, enemi }) => {
     }
 
     const atack = () => {
+        console.log('atack')
         let auxBattle = JSON.parse(JSON.stringify(battle))
-        auxBattle.enemi.pv -= auxBattle.player.atq
-        auxBattle.log.push(`Enemi -${auxBattle.player.atq} PV`)
+        console.log(auxBattle)
+        let damage = auxBattle.enemi.pv < auxBattle.player.atq ? auxBattle.enemi.pv : auxBattle.player.atq
+        auxBattle.enemi.pv -= damage
+        auxBattle.log.push(`Enemi -${damage} PV`)
         if (auxBattle.enemi.pv <= 0) {
             auxBattle.player.exp += auxBattle.enemi.exp
             auxBattle.state = 'win'
@@ -54,28 +58,25 @@ const Battle = ({ player, enemi }) => {
         }
         auxBattle.turn = 'enemi'
         setBattle(auxBattle)
+        player.current = auxBattle.player
     }
 
-    return <div className="df br" style={{ width: '50%', height: '50%' }}>
-        <div className="df fdc aic" style={{ width: '40%', height: '100%' }}>
-            <p>{battle.player.name}</p>
-            <p>PV: {battle.player.pv}</p>
-            <p>Exp: {battle.player.exp}</p>
-            <p>Lvl: {battle.player.lvl}</p>
-            <p>Atack: {battle.player.atq}</p>
-            <p>Defense: {battle.player.def}</p>
-            <p>Gold: {battle.player.gold}</p>
-            <button onClick={atack} className={battle.turn === 'enemi'? 'hidde': null}>Atack!</button>
+    return <div className="df jsc aic blr zi2 pa" style={{width: '100%', height: '100%'}}>
+        <div className="df jsc fdc aic obf" style={{ width: '250px', height: '350px' }}>
+            <div className="df fdc aic jsc br" style={{ width: '250px', height: '50%' }}>
+                <p>{battle.enemi.name}</p>
+                <p>PV: {battle.enemi.pv}</p>
+                <progress style={{ width: '200px' }} id="life" max={enemi.current.pv} value={battle.enemi.pv} />
+            </div>
+            <div className="df fdc aic jsc br" style={{ width: '250px', height: '50%' }}>
+                <p>{battle.player.name}</p>
+                <p>PV: {battle.player.pv}</p>
+                <progress style={{ width: '200px' }} id="life" max={player.current.pv} value={battle.player.pv} />
+                <button onClick={atack} className={battle.turn === 'enemi' ? 'hidde' : null} >Atack!</button>
+                <button onClick={() => setWindow(null)} className={battle.turn === 'enemi' ? 'hidde' : null}>Close</button>
+            </div>
         </div>
-        <div className="df fdc aic" style={{ width: '40%', height: '100%' }}>
-            <p>{battle.enemi.name}</p>
-            <p>PV: {battle.enemi.pv}</p>
-            <p>Exp: {battle.enemi.exp}</p>
-            <p>Lvl: {battle.enemi.lvl}</p>
-            <p>Atack: {battle.enemi.atq}</p>
-            <p>Defense: {battle.enemi.def}</p>
-        </div>
-        <div className="df fdc aic ys" style={{ width: '20%', height: '100%' }}>
+        <div className="df fdc aic ys br obf" style={{ width: '150px', height: '350px' }}>
             {battle.log.map(data => {
                 return <p>{data}</p>
             })}
