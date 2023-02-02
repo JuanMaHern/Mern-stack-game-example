@@ -51,6 +51,18 @@
 .br {
     border: 2px solid #f64328;
 }
+.bCom {
+    border: 2px solid gray;
+}
+.bRar {
+    border: 2px solid blue;
+}
+.bEpc {
+    border: 2px solid red;
+}
+.bLeg {
+    border: 2px solid gold;
+}
 .bwbb {
     border-bottom: 1px solid var(--text);
 }
@@ -83,4 +95,11 @@
 
 .pdg1 {
     padding: 1px;
+}
+.gp {
+    gap: 2px;
+}
+
+.brd5 {
+    border-radius: 5px;
 }

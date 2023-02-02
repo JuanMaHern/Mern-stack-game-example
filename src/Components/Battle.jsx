@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react"
+import ItemImg from "./ItemImg";
 
 const Battle = ({ player, enemi, setWindow }) => {
 
@@ -64,6 +65,7 @@ const Battle = ({ player, enemi, setWindow }) => {
     return <div className="df jsc aic blr zi2 pa" style={{width: '100%', height: '100%'}}>
         <div className="df jsc fdc aic obf" style={{ width: '250px', height: '350px' }}>
             <div className="df fdc aic jsc br" style={{ width: '250px', height: '50%' }}>
+                <ItemImg item={battle.enemi} />
                 <p>{battle.enemi.name}</p>
                 <p>PV: {battle.enemi.pv}</p>
                 <progress style={{ width: '200px' }} id="life" max={enemi.current.pv} value={battle.enemi.pv} />
